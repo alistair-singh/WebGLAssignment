@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Assignment 1</title>
+
+  <script type="text/javascript" src="MV.js" async></script>
+  <script type="text/javascript" src="scene.js" async></script>
+  <script id="vertexShader" type="x-shader/x-vertex">
+
+    uniform mat4 u_View;
+    uniform mat4 u_Projection;
+
+    uniform vec4 u_Color;
+    uniform mat4 u_Model;
+
+    attribute vec4 a_Position;
+    attribute vec4 a_Normal;
+
+    varying vec4 v_Color;
+
+    void main() {
+      gl_Position = a_Normal;
+      gl_Position = u_Projection * (u_View * u_Model) * a_Position;
+      v_Color = u_Color;
+    }
+  </script>
+  <script id="fragmentShader" type="x-shader/x-fragment">
+
+    precision mediump float;
+
+    varying vec4 v_Color;
+
+    void main() {
+      gl_FragColor = v_Color;
+    }
+  </script>
+</head>
+
+<body>
+  <button id="startButton">Start / Stop</button>
+  <button id="directionButton">Change Direction</button>
+  <div>
+    <label>Zoom</label>
+    <input id="zoomSlider" type="range" min="1" max="5" value="3" step="0.025">
+  </div>
+  <div>
+    <label>Rotation Speed</label>
+    <input id="rotationSlider" type="range" min="0.01" max="0.1" value="0.05" step="0.005">
+  </div>
+  <div>
+    <canvas id="gl-canvas" width="512" height="512">
+      <!-- The following message is displayed if the browser doesn’t -- support HTML5 -->
+      Sorry; your web browser does not support HTML5’s canvas element.
+    </canvas>
+  </div>
+</body>
+
+</html>
